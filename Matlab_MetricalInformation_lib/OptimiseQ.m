@@ -1,22 +1,22 @@
-function ValeurOptimale = OptimiseQ(vi,vf,p);
+function [MaxInformation,Tcritique] = OptimiseQ(vi,vf,h,FileName,nb)
 
 %%vi = valeur initiale de q
 %%vf = valeur finale
-%%p = pas
+%%h = pas
+%%nb = nb de repetitions
 
-a = round((vf - vi)./p)
+a = round((vf - vi)/h);
 
 MaxInformation = zeros(a,1);
 Tcritique = zeros(a,1);
 Q = zeros(a,1);
-for q = vi: p: vf
-   Result=MainAnalysisFunc('ST.dat','out_testing',10,q,-2,0,1);
-   l=length(Result);
-   p=round(q./p + 1);
-   MaxInformation(p) = Result(l);
+for q = vi: h: vf
+   Result=MainAnalysisFunc(FileName,'out_testing',10,q,-2,0,1);
+   p=round(q/h + 1);
+   MaxInformation(p) = max(Result);
    Q(p) = q;
    k=1;
-   while abs(Result(k) - MaxInformation(p))./MaxInformation(p) > 0.05
+   while abs(Result(k) - MaxInformation(p))/MaxInformation(p) > 0.05
        k=k+1;
    end
    Tcritique(p) = 10.*k;
@@ -34,7 +34,7 @@ set(get(AX(1),'Ylabel'),'String','Temps critique')
 set(get(AX(2),'Ylabel'),'String','Information maximale') 
 
 xlabel('Valeur de q en /ms') 
-title('Pour 10 répétition') 
+title(strcat('Pour', ' ', num2str(nb), ' répétitions')) 
 
 set(H1,'LineStyle','--')
 set(H2,'LineStyle','-')
