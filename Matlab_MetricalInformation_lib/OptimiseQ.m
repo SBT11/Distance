@@ -30,13 +30,13 @@ y1 = Tcritique;
 y2 = MaxInformation;
 [AX,H1,H2] = plotyy(x,y1,x,y2,'plot');
 
-set(get(AX(1),'Ylabel'),'String','Temps critique') 
+set(get(AX(1),'Ylabel'),'String','Temps critique (ms)') 
 set(get(AX(2),'Ylabel'),'String','Information maximale') 
 
 xlabel('Valeur de q en /ms') 
 title(strcat('Pour', ' ', num2str(nb), ' répétitions')) 
 
-set(H1,'LineStyle','--')
-set(H2,'LineStyle','-')
+set(H1,'LineStyle','--','LineWidth',1)
+set(H2,'LineStyle','-','LineWidth',1)
 
 end
